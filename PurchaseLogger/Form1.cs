@@ -22,26 +22,18 @@ namespace PurchaseLogger
 
         public PurchaseLoggerForm()
         {
-            ew = new ExcelWriter();
-            ConnectToBudget(ew);
             InitializeComponent();
         }
 
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
+            ew = new ExcelWriter();
+            ConnectToBudget(ew);
+            
             category = CategoryTextBox.Text;
 
-            date = DateTextBox.Text;
-            if (date == "")
-            {
-                date = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() +
-                    DateTime.Now.Day.ToString();
-            }
-            else 
-            { 
-                date = DateTextBox.Text; 
-            }
+            date = DateTextBoxY.Text + DateTextBoxM + DateTextBoxD;
 
             try
             {
@@ -54,8 +46,9 @@ namespace PurchaseLogger
             }
 
             //TODO add check for valid entries
+            if (!fe) { ew.WriteToExcel(category, value, date); }
 
-            ew.WriteToExcel(category,value,date);
+            ew.Close();
         }
 
 
@@ -79,6 +72,13 @@ namespace PurchaseLogger
                     process.Kill();
                 //Console.WriteLine(process.MainWindowTitle);
             }
+        }
+
+        private void TodayButton_Click(object sender, EventArgs e)
+        {
+            DateTextBoxY.Text = DateTime.Now.Year.ToString();
+            DateTextBoxM.Text = DateTime.Now.Month.ToString();
+            DateTextBoxD.Text = DateTime.Now.Day.ToString();
         }
 
         /*private void PurchaseLoggerForm_Load(object sender, EventArgs e)

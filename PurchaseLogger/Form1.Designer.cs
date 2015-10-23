@@ -33,8 +33,11 @@
             this.DateLabel = new System.Windows.Forms.Label();
             this.CategoryTextBox = new System.Windows.Forms.TextBox();
             this.ValueTextBox = new System.Windows.Forms.TextBox();
-            this.DateTextBox = new System.Windows.Forms.TextBox();
+            this.DateTextBoxM = new System.Windows.Forms.TextBox();
             this.SubmitButton = new System.Windows.Forms.Button();
+            this.DateTextBoxD = new System.Windows.Forms.TextBox();
+            this.DateTextBoxY = new System.Windows.Forms.TextBox();
+            this.TodayButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // CategoryLabel
@@ -78,30 +81,61 @@
             this.ValueTextBox.Size = new System.Drawing.Size(100, 20);
             this.ValueTextBox.TabIndex = 4;
             // 
-            // DateTextBox
+            // DateTextBoxM
             // 
-            this.DateTextBox.Location = new System.Drawing.Point(82, 74);
-            this.DateTextBox.Name = "DateTextBox";
-            this.DateTextBox.Size = new System.Drawing.Size(100, 20);
-            this.DateTextBox.TabIndex = 5;
+            this.DateTextBoxM.Location = new System.Drawing.Point(82, 74);
+            this.DateTextBoxM.Name = "DateTextBoxM";
+            this.DateTextBoxM.Size = new System.Drawing.Size(22, 20);
+            this.DateTextBoxM.TabIndex = 5;
+            this.DateTextBoxM.Text = "mm";
             // 
             // SubmitButton
             // 
             this.SubmitButton.Location = new System.Drawing.Point(82, 101);
             this.SubmitButton.Name = "SubmitButton";
             this.SubmitButton.Size = new System.Drawing.Size(75, 23);
-            this.SubmitButton.TabIndex = 6;
+            this.SubmitButton.TabIndex = 9;
             this.SubmitButton.Text = "Submit";
             this.SubmitButton.UseVisualStyleBackColor = true;
             this.SubmitButton.Click += new System.EventHandler(this.SubmitButton_Click);
+            // 
+            // DateTextBoxD
+            // 
+            this.DateTextBoxD.Location = new System.Drawing.Point(110, 74);
+            this.DateTextBoxD.Name = "DateTextBoxD";
+            this.DateTextBoxD.Size = new System.Drawing.Size(26, 20);
+            this.DateTextBoxD.TabIndex = 6;
+            this.DateTextBoxD.Text = "dd";
+            // 
+            // DateTextBoxY
+            // 
+            this.DateTextBoxY.Location = new System.Drawing.Point(142, 74);
+            this.DateTextBoxY.Name = "DateTextBoxY";
+            this.DateTextBoxY.Size = new System.Drawing.Size(40, 20);
+            this.DateTextBoxY.TabIndex = 7;
+            this.DateTextBoxY.Text = "yyyy";
+            // 
+            // TodayButton
+            // 
+            this.TodayButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.TodayButton.Location = new System.Drawing.Point(189, 74);
+            this.TodayButton.Name = "TodayButton";
+            this.TodayButton.Size = new System.Drawing.Size(58, 19);
+            this.TodayButton.TabIndex = 8;
+            this.TodayButton.Text = "Today";
+            this.TodayButton.UseVisualStyleBackColor = true;
+            this.TodayButton.Click += new System.EventHandler(this.TodayButton_Click);
             // 
             // PurchaseLoggerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(245, 153);
+            this.ClientSize = new System.Drawing.Size(267, 140);
+            this.Controls.Add(this.TodayButton);
+            this.Controls.Add(this.DateTextBoxY);
+            this.Controls.Add(this.DateTextBoxD);
             this.Controls.Add(this.SubmitButton);
-            this.Controls.Add(this.DateTextBox);
+            this.Controls.Add(this.DateTextBoxM);
             this.Controls.Add(this.ValueTextBox);
             this.Controls.Add(this.CategoryTextBox);
             this.Controls.Add(this.DateLabel);
@@ -109,7 +143,6 @@
             this.Controls.Add(this.CategoryLabel);
             this.Name = "PurchaseLoggerForm";
             this.Text = "Purchase Logger 2.0";
-            //this.Load += new System.EventHandler(this.PurchaseLoggerForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,8 +156,11 @@
         private System.Windows.Forms.Label DateLabel;
         private System.Windows.Forms.TextBox CategoryTextBox;
         private System.Windows.Forms.TextBox ValueTextBox;
-        private System.Windows.Forms.TextBox DateTextBox;
+        private System.Windows.Forms.TextBox DateTextBoxM;
         private System.Windows.Forms.Button SubmitButton;
+        private System.Windows.Forms.TextBox DateTextBoxD;
+        private System.Windows.Forms.TextBox DateTextBoxY;
+        private System.Windows.Forms.Button TodayButton;
     }
 }
 
