@@ -18,7 +18,9 @@ namespace PurchaseLogger
         string category = "";
         string date = "";
         double value = 0;
-        bool fe;
+
+        bool emptyE;
+        bool formatE;
 
         const string HINTY = "yyyy";
         const string HINTM = "mm";
@@ -30,8 +32,6 @@ namespace PurchaseLogger
         public PurchaseLoggerForm()
         {
             InitializeComponent();
-
-            //this.FormClosing += Form_Closing;
 
             CategoryTextBox.Enter += new System.EventHandler(CategoryTextBox_EnterHint);
             ValueTextBox.Enter += new System.EventHandler(ValueTextBox_EnterHint);
@@ -45,66 +45,60 @@ namespace PurchaseLogger
             DateTextBoxM.Leave += new System.EventHandler(DateTextBoxM_LeaveEmpty);
             DateTextBoxD.Leave += new System.EventHandler(DateTextBoxD_LeaveEmpty);
 
+            this.FormClosing += Form_Closing;
+
             ew = new ExcelWriter();
         }
 
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-
-            ConnectToBudget(ew);
             
             category = CategoryTextBox.Text;
-
             date = DateTextBoxY.Text + DateTextBoxM.Text + DateTextBoxD.Text;
+            
 
+            // All fields must have entry other than hint
+            emptyE = (DateTextBoxY.Text == HINTY || DateTextBoxM.Text == HINTM || 
+                        DateTextBoxD.Text == HINTD || CategoryTextBox.Text == HINTCAT ||
+                        ValueTextBox.Text == HINTVAL) ? true : false;
+            
+            // Cannot enter a nonnumber value
             try
             {
                 value = Convert.ToDouble(ValueTextBox.Text);
-                fe = false;
+                formatE = false;
             }
             catch (FormatException)
             {
-                fe = true;
+                formatE = true;
             }
 
-            //TODO add check for valid entries
-            if (!fe)
+            // So user knows what they did wrong ...or right
+            if (emptyE)
             {
-                ew.WriteToExcel(category, value, date);
+                MessageBox.Show("Please fill in all fields.");
+            }
+            else if (formatE)
+            {
+                MessageBox.Show("Invalid number entry, please try again.");
+            }
+            else if (ew.WriteToExcel(category, value, date))
+            {
                 MessageBox.Show("Purchase Logger has written \"" + date + ", " + category + ", "
                                 + value + "\" to " + ew.getDocPath() + "... \n"
-                                + "Submit another entry or close the app.");
+                                + "Please submit another entry or close the app.");
             }
             else
             {
-                MessageBox.Show("Invalid Number Entry.");
+                MessageBox.Show("A fatal error occured. Please close this app and try again.");
+                Application.Exit();
             }
+        }
 
+        private void Form_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
             ew.Close();
-        }
-
-
-        void ConnectToBudget(ExcelWriter ew)
-        {
-            if (ew.xlAppDNE()) { KillSpecificExcelFileProcess("Budget"); }
-            if (!ew.CreateExcelDoc())
-            {
-                ew.OpenExcelDoc();
-            }
-        }
-
-        static void KillSpecificExcelFileProcess(string fileName)
-        {
-            var processes = from p in Process.GetProcessesByName("EXCEL")
-                            select p;
-
-            foreach (var process in processes)
-            {
-                if (process.MainWindowTitle.Contains(fileName))
-                    process.Kill();
-                //Console.WriteLine(process.MainWindowTitle);
-            }
         }
 
         private void TodayButton_Click(object sender, EventArgs e)

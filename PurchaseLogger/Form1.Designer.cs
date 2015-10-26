@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PurchaseLoggerForm));
             this.CategoryLabel = new System.Windows.Forms.Label();
             this.ValueLabel = new System.Windows.Forms.Label();
             this.DateLabel = new System.Windows.Forms.Label();
@@ -135,9 +136,10 @@
             // 
             // PurchaseLoggerForm
             // 
+            this.AcceptButton = this.SubmitButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(270, 145);
+            this.ClientSize = new System.Drawing.Size(262, 137);
             this.Controls.Add(this.TodayButton);
             this.Controls.Add(this.DateTextBoxY);
             this.Controls.Add(this.DateTextBoxD);
@@ -148,8 +150,9 @@
             this.Controls.Add(this.DateLabel);
             this.Controls.Add(this.ValueLabel);
             this.Controls.Add(this.CategoryLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PurchaseLoggerForm";
-            this.Text = "Purchase Logger 2.0";
+            this.Text = "Purchase Logger 2.1";
             this.ResumeLayout(false);
             this.PerformLayout();
 

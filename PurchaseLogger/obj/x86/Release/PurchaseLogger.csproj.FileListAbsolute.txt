@@ -1,0 +1,9 @@
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\bin\x86\Release\PurchaseLogger.exe.config
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\bin\x86\Release\PurchaseLogger.exe
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\bin\x86\Release\PurchaseLogger.pdb
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.csproj.ResolveComReference.cache
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.PurchaseLoggerForm.resources
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.Properties.Resources.resources
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.csproj.GenerateResource.Cache
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.exe
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.pdb

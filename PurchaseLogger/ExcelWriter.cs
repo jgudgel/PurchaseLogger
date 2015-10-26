@@ -17,36 +17,37 @@ namespace PurchaseLogger
         Excel.Worksheet xlWorkSheet;
         object misValue;
         int _RowIndex;
-        string _currentDate = "";
         string _myDocPath = "";
 
 
         public ExcelWriter()
         {
-            _currentDate = DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Year.ToString();
             _myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Budget.xls";
+
+            ConnectToBudget();
         }
 
-        public void WriteToExcel(string category, double value, string date)
+        public bool WriteToExcel(string category, double value, string date)
         {
             // Notify adding tuple
-            Debug.WriteLine("Writing \"" + _currentDate + ", " + category + ", " + value + "\" to " + _myDocPath);
-
-            _RowIndex = xlWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing).Row;
-            _RowIndex++;
-            xlWorkSheet.Cells[_RowIndex, 1] = date;
-            xlWorkSheet.Cells[_RowIndex, 2] = category;
-            xlWorkSheet.Cells[_RowIndex, 3] = value;
-
+            Debug.WriteLine("Writing \"" + date + ", " + category + ", " + value + "\" to " + _myDocPath);
             try
             {
+                _RowIndex = xlWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing).Row;
+                _RowIndex++;
+                xlWorkSheet.Cells[_RowIndex, 1] = date;
+                xlWorkSheet.Cells[_RowIndex, 2] = category;
+                xlWorkSheet.Cells[_RowIndex, 3] = value;
+
+
                 xlWorkBook.SaveAs(_myDocPath, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue,
                                     misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue,
                                     misValue, misValue, misValue, misValue);
+                return true;
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                PrintExcelOpenError();
+                return false;
             }
         }
 
@@ -91,7 +92,7 @@ namespace PurchaseLogger
 
             
             // Notify creating doc
-            Console.WriteLine("Does not exist... Creating Budget.xls...");
+            Debug.WriteLine("Does not exist... Creating Budget.xls...");
 
             xlApp = new Microsoft.Office.Interop.Excel.Application();
             if (xlApp == null)
@@ -112,17 +113,25 @@ namespace PurchaseLogger
             xlWorkSheet.Cells[_RowIndex, 2] = "Category";
             xlWorkSheet.Cells[_RowIndex, 3] = "Value";
 
+            
             return true;
         }
 
         public void Close()
         {
-            xlWorkBook.Close(true, misValue, misValue);
+            try
+            {
+                xlWorkBook.Close(true, misValue, misValue);
 
-            xlApp.Quit();
-            releaseObject(xlWorkSheet);
-            releaseObject(xlWorkBook);
-            releaseObject(xlApp);
+                xlApp.Quit();
+                releaseObject(xlWorkSheet);
+                releaseObject(xlWorkBook);
+                releaseObject(xlApp);
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                //do nothing
+            }
         }
 
         private void releaseObject(object obj)
@@ -143,6 +152,27 @@ namespace PurchaseLogger
             }
         }
 
+        void ConnectToBudget()
+        {
+            if (xlAppDNE()) { KillSpecificExcelFileProcess("Budget"); }
+            if (!CreateExcelDoc())
+            {
+                OpenExcelDoc();
+            }
+        }
+
+        static void KillSpecificExcelFileProcess(string fileName)
+        {
+            var processes = from p in Process.GetProcessesByName("EXCEL")
+                            select p;
+
+            foreach (var process in processes)
+            {
+                if (process.MainWindowTitle.Contains(fileName))
+                    process.Kill();
+            }
+        }
+
         public void PrintExcelOpenError()
         {
             Debug.WriteLine("Error during Save: COM Exception\n");
@@ -153,7 +183,6 @@ namespace PurchaseLogger
             }
             Debug.WriteLine("\n\nCannot start program while Budget.xls is open...\n" +
                                 "Press any key to close this app.");
-            Console.ReadKey();
             if (IsOpened(xlWorkBook, xlApp))
             {
                 xlWorkBook.Close(true, misValue, misValue);
