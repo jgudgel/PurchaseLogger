@@ -7,3 +7,4 @@ C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release
 C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.csproj.GenerateResource.Cache
 C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.exe
 C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.pdb
+C:\Users\jogudgel\Documents\GitHub\PurchaseLogger\PurchaseLogger\obj\x86\Release\PurchaseLogger.csprojResolveAssemblyReference.cache

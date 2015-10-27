@@ -75,7 +75,7 @@
             this.CategoryTextBox.Name = "CategoryTextBox";
             this.CategoryTextBox.Size = new System.Drawing.Size(116, 20);
             this.CategoryTextBox.TabIndex = 4;
-            this.CategoryTextBox.Text = "e.g. Food, Furniture...";
+            this.CategoryTextBox.Text = "e.g. Food, Housing...";
             // 
             // ValueTextBox
             // 

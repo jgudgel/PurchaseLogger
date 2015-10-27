@@ -25,7 +25,7 @@ namespace PurchaseLogger
         const string HINTY = "yyyy";
         const string HINTM = "mm";
         const string HINTD = "dd";
-        const string HINTCAT = "e.g. Food, Furniture...";
+        const string HINTCAT = "e.g. Food, Housing...";
         const string HINTVAL = "e.g. 3.99, 8, 750.00...";
         const string EMPTY = "";
 
