@@ -13,12 +13,10 @@ namespace PurchaseLogger
     public class ExcelWriter
     {
         Excel.Application xlApp = null;
-        Excel.Workbook xlWorkBook;
+        static Excel.Workbook xlWorkBook;
         Excel.Worksheet xlWorkSheet;
-        Excel.Range catCell, dateCell, valCell;
-
         object misValue;
-        int rowIndex;
+        int _RowIndex;
         string _myDocPath = "";
 
 
@@ -29,18 +27,17 @@ namespace PurchaseLogger
             ConnectToBudget();
         }
 
-
         public bool WriteToExcel(string category, double value, string date)
         {
             // Notify adding tuple
             Debug.WriteLine("Writing \"" + date + ", " + category + ", " + value + "\" to " + _myDocPath);
             try
             {
-                rowIndex = xlWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing).Row;
-                rowIndex++;
-                xlWorkSheet.Cells[rowIndex, 1] = date;
-                xlWorkSheet.Cells[rowIndex, 2] = category;
-                xlWorkSheet.Cells[rowIndex, 3] = value;
+                _RowIndex = xlWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing).Row;
+                _RowIndex++;
+                xlWorkSheet.Cells[_RowIndex, 1] = date;
+                xlWorkSheet.Cells[_RowIndex, 2] = category;
+                xlWorkSheet.Cells[_RowIndex, 3] = value;
 
 
                 xlWorkBook.SaveAs(_myDocPath, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue,
@@ -111,10 +108,11 @@ namespace PurchaseLogger
             xlWorkBook = xlApp.Workbooks.Add(misValue);
 
             xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            rowIndex = 1;
-            xlWorkSheet.Cells[rowIndex, 1] = "Date";
-            xlWorkSheet.Cells[rowIndex, 2] = "Category";
-            xlWorkSheet.Cells[rowIndex, 3] = "Value";
+            _RowIndex = 1;
+            xlWorkSheet.Cells[_RowIndex, 1] = "Date";
+            xlWorkSheet.Cells[_RowIndex, 2] = "Category";
+            xlWorkSheet.Cells[_RowIndex, 3] = "Value";
+
             
             return true;
         }
@@ -126,7 +124,6 @@ namespace PurchaseLogger
                 xlWorkBook.Close(true, misValue, misValue);
 
                 xlApp.Quit();
-                //releaseObject(cell);
                 releaseObject(xlWorkSheet);
                 releaseObject(xlWorkBook);
                 releaseObject(xlApp);
@@ -195,109 +192,6 @@ namespace PurchaseLogger
             releaseObject(xlWorkBook);
             releaseObject(xlApp);
             System.Environment.Exit(0);
-        }
-
-        /*
-         *  inputs: 3 strings define range of values to sum, 1 double compares progress
-         *  output: messagebox.show(string) method informs user
-         */
-        public double calculateProg(string category, string fromDate, string toDate, 
-                                    double estimate)
-        {
-            double sum = calculateSum(category, fromDate, toDate);
-
-            return estimate - sum;
-        }
-
-        /*
-         * inputs: 3 strings define which table values to sum
-         *         Dates must be format: yyyymmdd
-         * output: sum
-         */
-        public double calculateSum(string category, string fromDate, string toDate)
-        {
-
-            int maxIndex = xlWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing).Row;
-            double sum = 0;
-            int fromDateInt = Int32.Parse(fromDate);
-            int toDateInt = Int32.Parse(toDate);
-
-            category = category.ToLower();
-
-
-            foreach (Excel.Range row in xlWorkSheet.UsedRange.Rows)
-            {
-                dateCell = xlWorkSheet.Cells[row.Row,1];
-                catCell = xlWorkSheet.Cells[row.Row,2];
-                valCell = xlWorkSheet.Cells[row.Row,3];
-                
-                if (row.Row == 1) continue;
-
-                if (category == "all")
-                {
-                    if (dateCell.Value >= fromDateInt && dateCell.Value <= toDateInt)
-                    {
-                        sum += valCell.Value;
-                    }
-                }
-
-                else
-                {
-                    if (dateCell.Value >= fromDateInt && dateCell.Value <= toDateInt
-                        && catCell.Value.ToLower() == category)
-                    {
-                        sum += valCell.Value;
-                    }
-                }
-
-                releaseObject(catCell);
-                releaseObject(dateCell);
-                releaseObject(valCell);
-            }
-
-            return sum;
-        }
-
-        /* 
-         * TODO: fix this so it handles month to month/ year to year
-         * input: 2 strings for range
-         * output: length of range as int
-         */
-        public int calcDateRange(string fromDate, string toDate)
-        {
-            int fromDateInt = Int32.Parse(fromDate);
-            int toDateInt = Int32.Parse(toDate);
-
-            DateTime oldDate = new DateTime(fromDateInt / 10000,
-                                            (fromDateInt / 100) % 100,
-                                            fromDateInt % 100);
-            DateTime newDate = new DateTime(toDateInt / 10000,
-                                            (toDateInt / 100) % 100,
-                                            toDateInt % 100);
-
-            TimeSpan ts = newDate - oldDate;
-
-            return ts.Days;
-        }
-
-        public bool isDate(string date)
-        {
-            try
-            {
-                int dateInt = Int32.Parse(date);
-                DateTime dateCheck = new DateTime(dateInt / 10000,
-                                            (dateInt / 100) % 100,
-                                            dateInt % 100);
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                return false;
-            }
-            return true;
         }
 
         public bool IsOpened(Excel.Workbook wkBook, Excel.Application xlApp)

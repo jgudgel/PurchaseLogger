@@ -21,6 +21,7 @@ namespace PurchaseLogger
 
         bool emptyE;
         bool formatE;
+        bool dateE;
 
         const string HINTY = "yyyy";
         const string HINTM = "mm";
@@ -32,6 +33,12 @@ namespace PurchaseLogger
         public PurchaseLoggerForm()
         {
             InitializeComponent();
+            DateTextBoxY.Text = DateTime.Now.Year.ToString();
+            DateTextBoxM.Text = DateTime.Now.Month.ToString();
+            DateTextBoxD.Text = DateTime.Now.Day.ToString();
+            DateTextBoxY.ForeColor = SystemColors.WindowText;
+            DateTextBoxM.ForeColor = SystemColors.WindowText;
+            DateTextBoxD.ForeColor = SystemColors.WindowText;
 
             CategoryTextBox.Enter += new System.EventHandler(CategoryTextBox_EnterHint);
             ValueTextBox.Enter += new System.EventHandler(ValueTextBox_EnterHint);
@@ -57,6 +64,9 @@ namespace PurchaseLogger
             category = CategoryTextBox.Text;
             date = DateTextBoxY.Text + DateTextBoxM.Text + DateTextBoxD.Text;
             
+            // Date must be actual date
+            dateE = !ew.isDate(date);
+
 
             // All fields must have entry other than hint
             emptyE = (DateTextBoxY.Text == HINTY || DateTextBoxM.Text == HINTM || 
@@ -82,6 +92,10 @@ namespace PurchaseLogger
             else if (formatE)
             {
                 MessageBox.Show("Invalid number entry, please try again.");
+            }
+            else if (dateE)
+            {
+                MessageBox.Show("Invalid date, please try again.");
             }
             else if (ew.WriteToExcel(category, value, date))
             {
@@ -202,11 +216,6 @@ namespace PurchaseLogger
                 DateTextBoxD.ForeColor = SystemColors.GrayText;
             }
         }
-
-        /*private void Form_Closing(object sender, FormClosingEventArgs e)
-        {
-            ew.Close();
-        }*/
     }
 
 

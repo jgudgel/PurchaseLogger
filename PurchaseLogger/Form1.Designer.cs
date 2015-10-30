@@ -38,7 +38,6 @@
             this.SubmitButton = new System.Windows.Forms.Button();
             this.DateTextBoxD = new System.Windows.Forms.TextBox();
             this.DateTextBoxY = new System.Windows.Forms.TextBox();
-            this.TodayButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // CategoryLabel
@@ -73,18 +72,18 @@
             this.CategoryTextBox.ForeColor = System.Drawing.SystemColors.GrayText;
             this.CategoryTextBox.Location = new System.Drawing.Point(82, 14);
             this.CategoryTextBox.Name = "CategoryTextBox";
-            this.CategoryTextBox.Size = new System.Drawing.Size(116, 20);
+            this.CategoryTextBox.Size = new System.Drawing.Size(100, 20);
             this.CategoryTextBox.TabIndex = 4;
-            this.CategoryTextBox.Text = "e.g. Food, Housing...";
+            this.CategoryTextBox.Text = "Food, Housing...";
             // 
             // ValueTextBox
             // 
             this.ValueTextBox.ForeColor = System.Drawing.SystemColors.GrayText;
             this.ValueTextBox.Location = new System.Drawing.Point(82, 44);
             this.ValueTextBox.Name = "ValueTextBox";
-            this.ValueTextBox.Size = new System.Drawing.Size(116, 20);
+            this.ValueTextBox.Size = new System.Drawing.Size(100, 20);
             this.ValueTextBox.TabIndex = 5;
-            this.ValueTextBox.Text = "e.g. 3.99, 8, 750.00...";
+            this.ValueTextBox.Text = "3.99, 8, 750.00...";
             // 
             // DateTextBoxM
             // 
@@ -123,24 +122,12 @@
             this.DateTextBoxY.TabIndex = 8;
             this.DateTextBoxY.Text = "yyyy";
             // 
-            // TodayButton
-            // 
-            this.TodayButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.TodayButton.Location = new System.Drawing.Point(189, 74);
-            this.TodayButton.Name = "TodayButton";
-            this.TodayButton.Size = new System.Drawing.Size(58, 19);
-            this.TodayButton.TabIndex = 9;
-            this.TodayButton.Text = "Today";
-            this.TodayButton.UseVisualStyleBackColor = true;
-            this.TodayButton.Click += new System.EventHandler(this.TodayButton_Click);
-            // 
             // PurchaseLoggerForm
             // 
             this.AcceptButton = this.SubmitButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(262, 137);
-            this.Controls.Add(this.TodayButton);
+            this.ClientSize = new System.Drawing.Size(234, 137);
             this.Controls.Add(this.DateTextBoxY);
             this.Controls.Add(this.DateTextBoxD);
             this.Controls.Add(this.SubmitButton);
@@ -170,7 +157,6 @@
         private System.Windows.Forms.Button SubmitButton;
         private System.Windows.Forms.TextBox DateTextBoxD;
         private System.Windows.Forms.TextBox DateTextBoxY;
-        private System.Windows.Forms.Button TodayButton;
     }
 }
 
