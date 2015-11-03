@@ -33,9 +33,9 @@ namespace PurchaseLogger
         public PurchaseLoggerForm()
         {
             InitializeComponent();
-            DateTextBoxY.Text = DateTime.Now.Year.ToString();
-            DateTextBoxM.Text = DateTime.Now.Month.ToString();
-            DateTextBoxD.Text = DateTime.Now.Day.ToString();
+            DateTextBoxY.Text = DateTime.Now.ToString("yyyy");
+            DateTextBoxM.Text = DateTime.Now.ToString("MM");
+            DateTextBoxD.Text = DateTime.Now.ToString("dd");
             DateTextBoxY.ForeColor = SystemColors.WindowText;
             DateTextBoxM.ForeColor = SystemColors.WindowText;
             DateTextBoxD.ForeColor = SystemColors.WindowText;
