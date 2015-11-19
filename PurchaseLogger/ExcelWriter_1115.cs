@@ -176,7 +176,6 @@ namespace PurchaseLogger
             }
         }
 
-        // error report
         public void PrintExcelOpenError()
         {
             Debug.WriteLine("Error during Save: COM Exception\n");
@@ -211,10 +210,9 @@ namespace PurchaseLogger
         }
 
         /*
-         *  inputs:  category
-         *          date range 
-         *          Dates must be format: yyyymmdd
-         *  output:  sum of purchases
+         * inputs: 3 strings define which table values to sum
+         *         Dates must be format: yyyymmdd
+         * output: sum
          */
         public double calculateSum(string category, string fromDate, string toDate)
         {
@@ -243,19 +241,6 @@ namespace PurchaseLogger
                     }
                 }
 
-                if (category == "other")
-                {
-                    if (dateCell.Value >= fromDateInt && dateCell.Value <= toDateInt 
-                        && catCell.Value.ToLower() != "housing" && 
-                           catCell.Value.ToLower() != "food" &&
-                           catCell.Value.ToLower() != "savings" &&
-                           catCell.Value.ToLower() != "transportation" &&
-                           catCell.Value.ToLower() != "past expenses")
-                    {
-                        sum += valCell.Value;
-                    }
-                }
-
                 else
                 {
                     if (dateCell.Value >= fromDateInt && dateCell.Value <= toDateInt
@@ -274,6 +259,7 @@ namespace PurchaseLogger
         }
 
         /* 
+         * TODO: fix this so it handles month to month/ year to year
          * input: 2 strings for range
          * output: length of range as int
          */
@@ -281,7 +267,6 @@ namespace PurchaseLogger
         {
             int fromDateInt = Int32.Parse(fromDate);
             int toDateInt = Int32.Parse(toDate);
-            Debug.WriteLine(toDate);
 
             DateTime oldDate = new DateTime(fromDateInt / 10000,
                                             (fromDateInt / 100) % 100,
@@ -295,11 +280,6 @@ namespace PurchaseLogger
             return ts.Days;
         }
 
-        
-        /*
-         * Create date object with string: yyyymmdd
-         * Return false if an exception appears
-         */
         public bool isDate(string date)
         {
             try
@@ -320,7 +300,6 @@ namespace PurchaseLogger
             return true;
         }
 
-        // check for CLR obj
         public bool IsOpened(Excel.Workbook wkBook, Excel.Application xlApp)
         {
             bool isOpened = true;
@@ -335,13 +314,11 @@ namespace PurchaseLogger
             return isOpened;
         }
 
-        // check if xlApp is null
         public bool xlAppDNE()
         {
             return (xlApp == null) ? true : false;
         }
 
-        // get doc path
         public string getDocPath()
         {
             return _myDocPath;
